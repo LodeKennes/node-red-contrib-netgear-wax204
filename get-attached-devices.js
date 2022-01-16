@@ -25,7 +25,7 @@ module.exports = function(RED) {
             const token = response
             .headers["set-cookie"][0]
             .substring(10)
-            .split(';');
+            .split(';')[0];
 
             // const devicesResponse = await instance.get('/refresh_dev.htm', {
             //     headers: {
