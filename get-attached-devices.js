@@ -3,7 +3,6 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', function(msg) {
-            msg.payload = msg.payload.toLowerCase();
             msg.ip = node.ip;
             msg.pw = node.password;
             msg.config = config;
@@ -11,5 +10,10 @@ module.exports = function(RED) {
             node.send(msg);
         });
     }
-    RED.nodes.registerType("get-attached-devices",LowerCaseNode);
+    RED.nodes.registerType("get-attached-devices",LowerCaseNode, {
+        credentials: {
+            username: {type:"text"},
+            password: {type:"password"}
+         }
+    });
 }
