@@ -6,6 +6,7 @@ module.exports = function(RED) {
 
     const wrapper = require('axios-cookiejar-support').wrapper;
     const CookieJar = require('tough-cookie').CookieJar;
+    const httpCookieAgent = require('http-cookie-agent').HttpsCookieAgent;
 
     const jar = new CookieJar();
 
@@ -17,7 +18,7 @@ module.exports = function(RED) {
             const instance =  wrapper(axios.create({
                 baseURL: `https://${ip}`,
                 withCredentials: true,
-                httpsAgent: new https.Agent({  
+                httpsAgent: new httpCookieAgent({  
                   rejectUnauthorized: false
                 }),
                 jar
