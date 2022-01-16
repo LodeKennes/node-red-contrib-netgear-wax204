@@ -4,17 +4,24 @@ module.exports = function(RED) {
     const url = require('url');
     const https = require('https');
 
+    const wrapper = require('axios-cookiejar-support').wrapper;
+    const CookieJar = require('tough-cookie').CookieJar;
+
+    const jar = new CookieJar();
+
     function LowerCaseNode(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', async function(msg) {
             const ip = this.credentials.username;
-            const instance = axios.create({
+            const instance =  wrapper(axios.create({
                 baseURL: `https://${ip}`,
+                withCredentials: true,
                 httpsAgent: new https.Agent({  
                   rejectUnauthorized: false
-                })
-              });
+                }),
+                jar
+              }));
 
             const params = new url.URLSearchParams();
             params.append('submit_flag', 'sso_login');
@@ -27,11 +34,7 @@ module.exports = function(RED) {
             .substring(10)
             .split(';')[0];
 
-            const devicesResponse = await instance.get('/refresh_dev.htm', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const devicesResponse = await instance.get('/refresh_dev.htm');
             const devices = devicesResponse.data;
 
             msg.payload = devices;
