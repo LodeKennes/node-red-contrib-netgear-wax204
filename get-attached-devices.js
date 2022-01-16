@@ -6,26 +6,27 @@ module.exports = function(RED) {
     const httpCookieAgent = require('http-cookie-agent').HttpCookieAgent;
     const httpsCookieAgent = require('http-cookie-agent').HttpsCookieAgent;
 
-    const jar = new CookieJar();
-    axios.defaults.httpAgent = new httpCookieAgent({
-        jar,
-        keepAlive: true,
-        rejectUnauthorized: false, // disable CA checks
-      });
-      axios.defaults.httpsAgent = new httpsCookieAgent({
-        jar,
-        keepAlive: true,
-        rejectUnauthorized: false, // disable CA checks
-      });
-      axios.defaults.headers.common = {
-        'User-Agent': 'HTTPie/2.3.0',
-        Accept: '*/*',
-      };
-
     function getAttachedDevices(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', async function(msg) {
+
+            const jar = new CookieJar();
+            axios.defaults.httpAgent = new httpCookieAgent({
+                jar,
+                keepAlive: true,
+                rejectUnauthorized: false, // disable CA checks
+              });
+              axios.defaults.httpsAgent = new httpsCookieAgent({
+                jar,
+                keepAlive: true,
+                rejectUnauthorized: false, // disable CA checks
+              });
+              axios.defaults.headers.common = {
+                'User-Agent': 'HTTPie/2.3.0',
+                Accept: '*/*',
+              };
+
             const ip = this.credentials.username;
             axios.defaults.baseURL = `https://${ip}`;
 
