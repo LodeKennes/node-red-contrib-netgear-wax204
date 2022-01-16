@@ -21,7 +21,7 @@ module.exports = function(RED) {
             params.append('sso_login_type', '0');
 
             const ip = this.credentials.username;
-            const response = instance.post(`https://${ip}/sso_login.cgi`, params)
+            const response = await instance.post(`https://${ip}/sso_login.cgi`, params)
             const token = response
             .headers["set-cookie"][0]
             .substring(10);
