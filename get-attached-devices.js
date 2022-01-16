@@ -1,4 +1,4 @@
-const fetch = require("fetch");
+var http = require("http");
 
 module.exports = function(RED) {
     function LowerCaseNode(config) {
@@ -20,7 +20,7 @@ module.exports = function(RED) {
             formBody = formBody.join("&");
 
             var ip = this.credentials.username;
-            fetch(`https://${ip}/sso_login.cgi`, {
+            http.post(`https://${ip}/sso_login.cgi`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
