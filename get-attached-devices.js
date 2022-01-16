@@ -25,16 +25,16 @@ module.exports = function(RED) {
             const token = response
             .headers["set-cookie"][0]
             .substring(10)
-            .split(';')[0];
+            .split(';');
 
-            const devicesResponse = await instance.get('/refresh_dev.htm', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            const devices = devicesResponse.data;
+            // const devicesResponse = await instance.get('/refresh_dev.htm', {
+            //     headers: {
+            //         'Authorization': `Bearer ${token}`
+            //     }
+            // });
+            // const devices = devicesResponse.data;
 
-            msg.payload = devices;
+            msg.payload = token;
             node.send(msg);
         });
     }
