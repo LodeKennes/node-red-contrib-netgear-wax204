@@ -4,6 +4,10 @@ module.exports = function(RED) {
         var node = this;
         node.on('input', function(msg) {
             msg.payload = msg.payload.toLowerCase();
+            msg.ip = node.ip;
+            msg.pw = node.password;
+            msg.config = config;
+
             node.send(msg);
         });
     }
