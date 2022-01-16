@@ -1,3 +1,5 @@
+const fetch = require("fetch");
+
 module.exports = function(RED) {
     function LowerCaseNode(config) {
         RED.nodes.createNode(this,config);
