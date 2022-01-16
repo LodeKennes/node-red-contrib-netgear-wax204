@@ -8,13 +8,12 @@ module.exports = function(RED) {
     const CookieJar = require('tough-cookie').CookieJar;
     const httpsCookieAgent = require('http-cookie-agent').HttpsCookieAgent;
 
+    const jar = new CookieJar();
     axios.defaults.httpsAgent = new httpsCookieAgent({
         jar,
         keepAlive: true,
         rejectUnauthorized: false, // disable CA checks
       });
-
-    const jar = new CookieJar();
 
     function LowerCaseNode(config) {
         RED.nodes.createNode(this,config);
