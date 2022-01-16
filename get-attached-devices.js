@@ -22,7 +22,7 @@ module.exports = function(RED) {
         Accept: '*/*',
       };
 
-    function LowerCaseNode(config) {
+    function getAttachedDevices(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', async function(msg) {
@@ -42,7 +42,7 @@ module.exports = function(RED) {
             node.send(msg);
         });
     }
-    RED.nodes.registerType("get-attached-devices",LowerCaseNode, {
+    RED.nodes.registerType("get-attached-devices",getAttachedDevices, {
         credentials: {
             username: {type:"text"},
             password: {type:"password"}
