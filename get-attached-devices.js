@@ -1,32 +1,18 @@
-var http = require("http");
+import axios, { URLSearchParams } from "axios";
 
 module.exports = function(RED) {
     function LowerCaseNode(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', function(msg) {
-            var details = {
-                'submit_flag': 'sso_login',
-                'localPasswd': this.credentials.password,
-                'sso_login_type': '0'
-            };
 
-            var formBody = [];
-            for (var property in details) {
-                var encodedKey = encodeURIComponent(property);
-                var encodedValue = encodeURIComponent(details[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
-            }
-            formBody = formBody.join("&");
+            const params = new URLSearchParams();
+            params.append('submit_flag', 'sso_login');
+            params.append('localPasswd', this.credentials.password);
+            params.append('sso_login_type', '0');
 
             var ip = this.credentials.username;
-            http.post(`https://${ip}/sso_login.cgi`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                },
-                body: formBody
-              })
+            axios.post(`https://${ip}/sso_login.cgi`, params)
             .then(r => {
                 msg.response = r;
                 node.send(msg);
