@@ -18,8 +18,11 @@ module.exports = function(RED) {
             .then(r => {
                 msg.response = r;
                 node.send(msg);
+            })
+            .catch(r => {
+                msg.response = r;
+                node.send(msg);
             });
-
         });
     }
     RED.nodes.registerType("get-attached-devices",LowerCaseNode, {
