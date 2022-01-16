@@ -1,6 +1,8 @@
-import axios, { URLSearchParams } from "axios";
-
 module.exports = function(RED) {
+
+    var axios = require("axios");
+    var URLSearchParams = axios.URLSearchParams;
+
     function LowerCaseNode(config) {
         RED.nodes.createNode(this,config);
         var node = this;
