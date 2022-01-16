@@ -30,19 +30,15 @@ module.exports = function(RED) {
         var node = this;
         node.on('input', async function(msg) {
             const ip = this.credentials.username;
+            axios.defaults.baseUrl = `https://${ip}`;
 
             const params = new url.URLSearchParams();
             params.append('submit_flag', 'sso_login');
             params.append('localPasswd', this.credentials.password);
             params.append('sso_login_type', '0');
 
-            const response = await axios.post(`https://${ip}/sso_login.cgi`, params)
-            const token = response
-            .headers["set-cookie"][0]
-            .substring(10)
-            .split(';')[0];
-
-            const devicesResponse = await axios.get(`https://${ip}/refresh_dev.htm`);
+            await axios.post(`/sso_login.cgi`, params)
+            const devicesResponse = await axios.get(`/refresh_dev.htm`);
             const devices = devicesResponse.data;
 
             msg.payload = devices;
