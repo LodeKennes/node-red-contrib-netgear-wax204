@@ -2,6 +2,13 @@ module.exports = function(RED) {
 
     const axios = require("axios");
     const url = require('url');
+    const https = require('https');
+
+    const instance = axios.create({
+        httpsAgent: new https.Agent({  
+          rejectUnauthorized: false
+        })
+      });
 
     function LowerCaseNode(config) {
         RED.nodes.createNode(this,config);
@@ -14,7 +21,7 @@ module.exports = function(RED) {
             params.append('sso_login_type', '0');
 
             const ip = this.credentials.username;
-            axios.post(`https://${ip}/sso_login.cgi`, params)
+            instance.post(`https://${ip}/sso_login.cgi`, params)
             .then(r => {
                 msg.response = r;
                 node.send(msg);
