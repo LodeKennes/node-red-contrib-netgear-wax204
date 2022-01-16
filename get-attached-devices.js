@@ -2,9 +2,6 @@ module.exports = function(RED) {
 
     const axios = require("axios");
     const url = require('url');
-    const https = require('https');
-
-    const wrapper = require('axios-cookiejar-support').wrapper;
     const CookieJar = require('tough-cookie').CookieJar;
     const httpCookieAgent = require('http-cookie-agent').HttpCookieAgent;
     const httpsCookieAgent = require('http-cookie-agent').HttpsCookieAgent;
