@@ -27,14 +27,14 @@ module.exports = function(RED) {
             .substring(10)
             .split(';')[0];
 
-            // const devicesResponse = await instance.get('/refresh_dev.htm', {
-            //     headers: {
-            //         'Authorization': `Bearer ${token}`
-            //     }
-            // });
-            // const devices = devicesResponse.data;
+            const devicesResponse = await instance.get('/refresh_dev.htm', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const devices = devicesResponse.data;
 
-            msg.payload = token;
+            msg.payload = devices;
             node.send(msg);
         });
     }
