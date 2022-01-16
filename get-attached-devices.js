@@ -3,9 +3,8 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', function(msg) {
-            msg.ip = node.ip;
-            msg.pw = node.password;
-            msg.config = config;
+            msg.ip = this.credentials.username;
+            msg.pw = this.credentials.password;
 
             node.send(msg);
         });
