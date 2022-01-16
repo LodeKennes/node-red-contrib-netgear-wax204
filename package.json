@@ -1,0 +1,16 @@
+{
+  "name": "red-contrib-netgear-wax204",
+  "version": "1.0.0",
+  "description": "",
+  "main": "get-attached-devices.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "node-red": {
+    "nodes": {
+      "get-attached-devices": "get-attached-devices.js"
+    }
+  }
+}
