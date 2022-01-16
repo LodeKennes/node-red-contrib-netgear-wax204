@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('lower-case',{
+    RED.nodes.registerType('get-attached-devices',{
         category: 'function',
         color: '#a6bbcf',
         defaults: {
@@ -16,11 +16,15 @@
 
 <script type="text/html" data-template-name="get-attached-devices">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> ip</label>
-        <input type="text" id="node-input-ip" placeholder="ip">
+        <label for="node-input-ip"><i class="fa fa-tag"></i> IP</label>
+        <input required type="text" id="node-input-ip" placeholder="ip">
+    </div>
+    <div class="form-row">
+        <label for="node-input-password"><i class="fa fa-tag"></i> Password</label>
+        <input required type="text" id="node-input-password" placeholder="password">
     </div>
 </script>
 
-<script type="text/html" data-help-name="lower-case">
+<script type="text/html" data-help-name="get-attached-devices">
     <p>A simple node that converts the message payloads into all lower-case characters</p>
 </script>
