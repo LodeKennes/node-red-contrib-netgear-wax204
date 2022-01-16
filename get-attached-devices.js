@@ -13,7 +13,7 @@ module.exports = function(RED) {
     function LowerCaseNode(config) {
         RED.nodes.createNode(this,config);
         var node = this;
-        node.on('input', function(msg) {
+        node.on('input', async function(msg) {
 
             const params = new url.URLSearchParams();
             params.append('submit_flag', 'sso_login');
@@ -21,15 +21,13 @@ module.exports = function(RED) {
             params.append('sso_login_type', '0');
 
             const ip = this.credentials.username;
-            instance.post(`https://${ip}/sso_login.cgi`, params)
-            .then(r => {
-                msg.response = r;
-                node.send(msg);
-            })
-            .catch(r => {
-                msg.response = r;
-                node.send(msg);
-            });
+            const response = instance.post(`https://${ip}/sso_login.cgi`, params)
+            const token = response
+            .headers["set-cookie"][0]
+            .substring(10);
+
+            msg.token = token;
+            node.send(msg);
         });
     }
     RED.nodes.registerType("get-attached-devices",LowerCaseNode, {
