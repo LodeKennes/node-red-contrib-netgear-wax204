@@ -30,7 +30,7 @@ module.exports = function(RED) {
         var node = this;
         node.on('input', async function(msg) {
             const ip = this.credentials.username;
-            axios.defaults.baseUrl = `https://${ip}`;
+            axios.defaults.baseURL = `https://${ip}`;
 
             const params = new url.URLSearchParams();
             params.append('submit_flag', 'sso_login');
